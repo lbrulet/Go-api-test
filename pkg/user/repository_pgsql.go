@@ -22,13 +22,14 @@ func (r *PostgresRepository) Migrate() {
 }
 
 func (r *PostgresRepository) GetUserByID(ID int) (*models.User, error) {
-	var user *models.User
-	err := r.db.Where(&models.User{ID: ID}).First(user).Error
-	return user, err
+	var user models.User
+	err := r.db.Where("id = ?", ID).First(&user).Error
+	return &user, err
+
 }
 
 func (r *PostgresRepository) DeleteUserByID(ID int) error {
-	return r.db.Delete(models.User{}, "id =", ID).Error
+	return r.db.Where("id = ?", ID).Delete(&models.User{}).Error
 }
 
 func (r *PostgresRepository) UpdateUserByID(user *models.User) error {
