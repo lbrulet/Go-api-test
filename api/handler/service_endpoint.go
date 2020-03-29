@@ -10,14 +10,17 @@ import (
 	"github.com/lbrulet/Go-api-test/pkg/user"
 )
 
+//UserEndpointService is a user endpoint service structure
 type UserEndpointService struct {
 	userService *user.Service
 }
 
+//NewUserEndpointService is the constructor of UserEndpointService
 func NewUserEndpointService(userService *user.Service) *UserEndpointService {
 	return &UserEndpointService{userService: userService}
 }
 
+//CreateUser is an endpoint to create a user
 func (e *UserEndpointService) CreateUser() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		payload := &models.User{}
@@ -34,6 +37,7 @@ func (e *UserEndpointService) CreateUser() func(c *gin.Context) {
 	}
 }
 
+//GetUsers is an endpoint to get all users
 func (e *UserEndpointService) GetUsers() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		users, err := e.userService.GetAllUsers()
@@ -45,6 +49,7 @@ func (e *UserEndpointService) GetUsers() func(c *gin.Context) {
 	}
 }
 
+//UpdateUser is an endpoint to update a user
 func (e *UserEndpointService) UpdateUser() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		payload := &models.User{}
@@ -64,6 +69,7 @@ func (e *UserEndpointService) UpdateUser() func(c *gin.Context) {
 	}
 }
 
+//DeleteUser is an endpoint to delete a user
 func (e *UserEndpointService) DeleteUser() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		userID, err := strconv.Atoi(c.Param("id"))
