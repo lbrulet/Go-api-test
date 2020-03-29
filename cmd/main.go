@@ -36,12 +36,12 @@ func main() {
 
 	userService := user.NewService(userRepository)
 
-	userEndpointService := handler.NewUserEndpointService()
+	userEndpointService := handler.NewUserEndpointService(userService)
 
 	router := gin.New()
 	router.Use(gin.Recovery())
 
-	httpService := api.NewHttpService(router, userService, userEndpointService)
+	httpService := api.NewHttpService(router, userEndpointService)
 	httpService.SetupRouter()
 
 	_ = httpService.Router().Run(":" + port)

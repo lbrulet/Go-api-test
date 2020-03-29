@@ -11,14 +11,14 @@ import (
 )
 
 type UserEndpointService struct {
-	
+	userService *user.Service
 }
 
-func NewUserEndpointService() *UserEndpointService {
-	return &UserEndpointService{}
+func NewUserEndpointService(userService *user.Service) *UserEndpointService {
+	return &UserEndpointService{userService: userService}
 }
 
-func (e *UserEndpointService) CreateUser(userService *user.Service) func(c *gin.Context) {
+func (e *UserEndpointService) CreateUser() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		payload := &models.User{}
 
@@ -26,7 +26,7 @@ func (e *UserEndpointService) CreateUser(userService *user.Service) func(c *gin.
 			c.JSON(http.StatusBadRequest, gin.H{"data": err.Error()})
 		}
 
-		if err := userService.InsertUser(payload); err != nil {
+		if err := e.userService.InsertUser(payload); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"data": err.Error()})
 		}
 
@@ -34,9 +34,9 @@ func (e *UserEndpointService) CreateUser(userService *user.Service) func(c *gin.
 	}
 }
 
-func (e *UserEndpointService) GetUsers(userService *user.Service) func(c *gin.Context) {
+func (e *UserEndpointService) GetUsers() func(c *gin.Context) {
 	return func(c *gin.Context) {
-		users, err := userService.GetAllUsers()
+		users, err := e.userService.GetAllUsers()
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"data": err.Error()})
 		}
@@ -45,7 +45,7 @@ func (e *UserEndpointService) GetUsers(userService *user.Service) func(c *gin.Co
 	}
 }
 
-func (e *UserEndpointService) UpdateUser(userService *user.Service) func(c *gin.Context) {
+func (e *UserEndpointService) UpdateUser() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		payload := &models.User{}
 
@@ -53,18 +53,18 @@ func (e *UserEndpointService) UpdateUser(userService *user.Service) func(c *gin.
 			c.JSON(http.StatusBadRequest, gin.H{"data": err.Error()})
 		}
 
-		_, err := userService.GetUserByID(payload.ID)
+		_, err := e.userService.GetUserByID(payload.ID)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"data": err.Error()})
 		}
 
-		_ = userService.UpdateUserByID(payload)
+		_ = e.userService.UpdateUserByID(payload)
 
 		c.JSON(http.StatusOK, gin.H{"data": payload})
 	}
 }
 
-func (e *UserEndpointService) DeleteUser(userService *user.Service) func(c *gin.Context) {
+func (e *UserEndpointService) DeleteUser() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		userID, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
@@ -72,14 +72,13 @@ func (e *UserEndpointService) DeleteUser(userService *user.Service) func(c *gin.
 			return
 		}
 
-		_, err = userService.GetUserByID(userID)
+		_, err = e.userService.GetUserByID(userID)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"data": err.Error()})
 			return
 		}
 
-		_ = userService.DeleteUserByID(userID)
-
+		_ = e.userService.DeleteUserByID(userID)
 
 		c.JSON(http.StatusNoContent, gin.H{"data": nil})
 	}
