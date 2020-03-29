@@ -1,15 +1,17 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+
 	"github.com/lbrulet/Go-api-test/api/handler"
 	"github.com/lbrulet/Go-api-test/pkg/user"
-	"net/http"
 )
 
 type HttpService struct {
-	router          *gin.Engine
-	userService     *user.Service
+	router              *gin.Engine
+	userService         *user.Service
 	userEndpointService *handler.UserEndpointService
 }
 
@@ -25,8 +27,8 @@ func (h *HttpService) Ping() func(c *gin.Context) {
 
 func NewHttpService(router *gin.Engine, userService *user.Service, userEndpointService *handler.UserEndpointService) *HttpService {
 	return &HttpService{
-		router: router,
-		userService: userService,
+		router:              router,
+		userService:         userService,
 		userEndpointService: userEndpointService,
 	}
 }

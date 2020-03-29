@@ -3,6 +3,7 @@ package user
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+
 	"github.com/lbrulet/Go-api-test/pkg/models"
 )
 

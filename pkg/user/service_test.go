@@ -1,10 +1,11 @@
 package user
 
 import (
-	"github.com/lbrulet/Go-api-test/pkg/models"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/lbrulet/Go-api-test/pkg/models"
 )
 
 func TestNewService(t *testing.T) {
@@ -272,9 +273,9 @@ func TestService_UpdateUserByID(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "test_update_user_by_id",
-			fields:  fields{r: r},
-			args:    args{user: &models.User{
+			name:   "test_update_user_by_id",
+			fields: fields{r: r},
+			args: args{user: &models.User{
 				ID:        1,
 				FirstName: "test",
 				LastName:  "test",
@@ -286,9 +287,9 @@ func TestService_UpdateUserByID(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "test_update_user_by_id_with_error",
-			fields:  fields{r: r},
-			args:    args{user: &models.User{
+			name:   "test_update_user_by_id_with_error",
+			fields: fields{r: r},
+			args: args{user: &models.User{
 				ID:        0,
 				FirstName: "test",
 				LastName:  "test",

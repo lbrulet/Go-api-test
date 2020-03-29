@@ -2,6 +2,7 @@ package user
 
 import (
 	"github.com/jinzhu/gorm"
+
 	"github.com/lbrulet/Go-api-test/pkg/models"
 )
 

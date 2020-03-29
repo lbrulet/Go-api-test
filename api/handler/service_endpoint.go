@@ -1,11 +1,13 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/lbrulet/Go-api-test/pkg/models"
-	"github.com/lbrulet/Go-api-test/pkg/user"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+
+	"github.com/lbrulet/Go-api-test/pkg/models"
+	"github.com/lbrulet/Go-api-test/pkg/user"
 )
 
 type UserEndpointService struct {

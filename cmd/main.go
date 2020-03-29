@@ -2,12 +2,14 @@ package main
 
 import (
 	"flag"
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+
 	"github.com/lbrulet/Go-api-test/api"
 	"github.com/lbrulet/Go-api-test/api/handler"
 	"github.com/lbrulet/Go-api-test/pkg/user"
-	"log"
 )
 
 var (
